@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, flash, redirect
 from app.forms import LoginForm
 
 
@@ -19,4 +19,8 @@ def aboutme():
 def login():
     '''login url'''
     form = LoginForm()
+
+    if form.validate_on_submit():
+        flash(f'You are requesting to login as {form.username.data}')
+        return redirect('/index')
     return render_template('login.html', title='login', form=form)     
