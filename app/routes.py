@@ -14,6 +14,7 @@ def aboutme():
     'About me URL'
     return render_template('aboutme.html', title="About me page") 
 
+@app.route('/login', methods = ['GET', 'POST'])
 @app.route('/login')
 def login():
     '''login url'''
