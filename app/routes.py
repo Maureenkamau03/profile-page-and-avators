@@ -1,10 +1,10 @@
 from app import app
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
 from app.forms import LoginForm
 
 
 @app.route("/")
-@app.route("/index")
+@app.route("/home")
 def index():
     """Index URL"""
     return render_template('index.html', title='Index Page')
@@ -22,5 +22,5 @@ def login():
 
     if form.validate_on_submit():
         flash(f'You are requesting to login {form.username.data}')
-        return redirect('/index')
+        return redirect(url_for('index'))
     return render_template('login.html', title='login', form=form)     
