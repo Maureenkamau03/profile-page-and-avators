@@ -18,15 +18,7 @@
                         </span>
                     {% endfor %}
                 </p>
-                <p>
-                    {{ form.language.label }} <br>
-                    {{form.language }}
-                    {% for error in form.language.errors %}
-                        <span style="color: red">
-                            {{ error }}
-                        </span>
-                    {% endfor %}
-                </p>
+                
                 <p>
                     {{form.password.label }} <br>
                     {{form.password(size=32) }}
