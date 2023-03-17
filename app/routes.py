@@ -1,6 +1,6 @@
 from app import app, db
 from app.models import User
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 from flask import render_template, flash, redirect, url_for
 from app.forms import LoginForm, RegisterForm
 
@@ -39,11 +39,13 @@ def register():
 
 @app.route("/")
 @app.route("/home")
+@login_required
 def index():
     """Index URL"""
     return render_template('index.html', title='Index Page')
 
 @app.route('/aboutme')  
+@login_required
 def aboutme():
     'About me URL'
     return render_template('aboutme.html', title="About me page") 
