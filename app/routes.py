@@ -44,10 +44,12 @@ def index():
     """Index URL"""
     return render_template('index.html', title='Index Page')
 
-@app.route('/aboutme')  
+@app.route('/<username>/profile')  
 @login_required
-def aboutme():
-    'About me URL'
+def profile(username):
+    'Profile page'
+    user = user.query.filter_by(username=username).first_or_404()
+    return render_template('profile.html',title='profile', title='Profile', user=user)
     return render_template('aboutme.html', title="About me page") 
 
 # @app.route('/login', methods = ['GET', 'POST'])
