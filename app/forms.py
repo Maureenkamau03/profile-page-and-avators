@@ -20,4 +20,9 @@ class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirmpassword = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Register')   
+    submit = SubmitField('Register')
+
+class PostForm(FlaskForm):
+    body = TextAreaField("Body", validators=[DataRequired()])
+    submit = SubmitField("Post")
+       
