@@ -3,6 +3,7 @@ from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import db, login
+from hashLib import md5
 
 #loading a user from the db using their id
 @login.user_loader
@@ -25,6 +26,7 @@ class User(UserMixin, db.Model):
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
     
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
