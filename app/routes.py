@@ -1,8 +1,8 @@
 from app import app, db
-from app.models import User
+from app.models import User, Post
 from flask_login import login_user, logout_user, login_required, current_user
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegisterForm, EditProfileForm
+from app.forms import LoginForm, RegisterForm, EditProfileForm, PostForm
 from datetime import datetime
 
 @app.route('/logout')
@@ -74,4 +74,19 @@ def edit_profile():
     elif request.method == "GET":
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', title='Edit Profile', form=form)     
+    return render_template('edit_profile.html', title='Edit Profile', form=form)  
+
+@app.route('/', methods = ['GET', 'POST'])
+@app.route('/home', methods = ['GET', 'POST'])
+@login_required
+def index():
+    form = PostForm()
+
+    if form.validate_on_submit():
+        post = Post(form.body.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is live')
+        return redirect(url_for('index'))
+    posts = Post.query.all()
+    return render_template('index.html', title='Home', form=form, posts=posts)    
