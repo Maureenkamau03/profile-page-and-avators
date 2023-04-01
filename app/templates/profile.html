@@ -28,6 +28,22 @@
 
 
     </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            {% for post in posts%}
+                {% if post %}
+                    <table>
+                        <tr valign="top">
+                            <td> <img src="{{ post.autor.avator(36)}}" alt=""> </td>
+                            <td> {{ post.author.username}} says: <br>{{ post.body}} </td>
+                        </tr>
+                    </table>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
 
 
 {% endblock %}

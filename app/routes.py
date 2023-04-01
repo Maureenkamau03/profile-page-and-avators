@@ -40,24 +40,33 @@ def register():
 
 @app.before_request
 def before_request():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
 
-@app.route("/")
-@app.route("/home")
+@app.route('/', methods = ['GET', 'POST'])
+@app.route('/home', methods = ['GET', 'POST'])
 @login_required
 def index():
-    """Index URL"""
-    return render_template('index.html', title='Index Page')
+    form = PostForm()
+
+    if form.validate_on_submit():
+        post = Post(form.body.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is live')
+        return redirect(url_for('index'))
+    posts = Post.query.all()
+    return render_template('index.html', title='Home', form=form, posts=posts)    
 
 @app.route('/<username>/profile')  
 @login_required
 def profile(username):
     'Profile page'
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('profile.html',title='profile', user=user)
+    posts = current_user.pots.all()
+    return render_template('profile.html',title='profile', user=user, posts=posts)
     
 
 @app.route('/edit_profile', methods = ['GET', 'POST'])
@@ -75,18 +84,5 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)  
+ddd
 
-@app.route('/', methods = ['GET', 'POST'])
-@app.route('/home', methods = ['GET', 'POST'])
-@login_required
-def index():
-    form = PostForm()
-
-    if form.validate_on_submit():
-        post = Post(form.body.data, author=current_user)
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post is live')
-        return redirect(url_for('index'))
-    posts = Post.query.all()
-    return render_template('index.html', title='Home', form=form, posts=posts)    
