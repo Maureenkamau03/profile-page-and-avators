@@ -3,14 +3,16 @@
 {% block content %}
     <div class="row">
             
-        <div class="col-md-6 ">
-            <p><b>Background </b></p>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+        <div class="col-md-5 ">
+            <p>
+                <img src="{{ user.avator(120)}}" alt="avator">
+            </p>
+           
         </div>
-        <div class="col-md-6 ">
+        <div class="col-md-7 ">
         
-            <p><b> Study</b></p>
-            <P>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</P>
+            <p> <strong> Username: </strong> {{ user.username }}</p>
+            <p> <strong> Email: </strong> {{ user.email }}</p>
         </div>
         
     </div>
