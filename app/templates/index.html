@@ -2,24 +2,44 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-4">
-            username: {{ current_user.username}}
-        </div>
-            
-        <div class="col-md-4 ">
-            <!-- <p><b>Background </b></p> -->
-            
-            <img src="{{ url_for('static', filename='images/apple.png') }}">
-            
-            <p>Welcome to python, Flask</p>
-        </div>
-        <div class="col-md-4 ">
-        
-            <!-- <p><b> Study</b></p> -->
-            <P>Have you worked with templates before? Worry not, this is where you learn about flask templates.</P>
-        </div>
+        <div class="col-md-12">
+            <p> 
+                username: {{ current_user.username}}
 
-        
+            </p>
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.body.label }} <br>
+                    {{form.body(size=32) }}
+                    {% for error in form.body.errors %}
+                        <span style="color: red">
+                            {{ error }}
+                        </span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.submit() }}
+                </p>
+            </form>
+
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            {% for post in posts%}
+                {% if post %}
+                    <table>
+                        <tr valign="top">
+                            <td> <img src="{{ post.author.avator(36)}}" alt=""> </td>
+                            <td> {{ post.author.username}} says: <br>{{ post.body}} </td>
+                        </tr>
+                    </table>
+                {% endif %}
+            {% endfor %}
+
+        </div>
     </div>
 
 
